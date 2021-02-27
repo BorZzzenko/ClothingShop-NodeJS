@@ -5,7 +5,7 @@ const Color = require('../models/color');
 const Category = require('../models/category');
 
 // Clothes catalog
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const allClothes = await Clothes.find();
 
@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 });
 
 // Clothes info
-router.get("/product/:id", async (req, res) => {
+router.get('/product/:id', async (req, res) => {
     try {
         const clothes = await Clothes.findById(req.params.id);
         const color = await Color.findOne({id: clothes.color_id});
@@ -32,7 +32,42 @@ router.get("/product/:id", async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-    
+});
+
+// Clothes creation form rendering
+router.get('/create', async (req, res) => {
+    try {
+        const colors = await Color.find();
+        const categories = await Category.find();
+
+        res.render('create_clothes.html', {
+            title: 'Новая одежда',
+            colors: colors,
+            categories: categories,
+        });
+    } catch (err) {
+        res.json({message: err});
+    }
+});
+
+// Create clothes
+router.post('/create', async (req, res) => {
+    const clothes = new Clothes({
+        name: req.body.name,
+        category_id: req.body.category_id,
+        color_id: req.body.color_id,
+        price: req.body.price,
+        sizes: req.body.sizes,
+        description: req.body.description,
+        imagePath: req.body.imagePath
+    });
+
+    try {
+        await clothes.save();
+        res.redirect('/');
+    } catch (err) {
+        res.json({message: err});
+    }
 });
 
 module.exports = router;
