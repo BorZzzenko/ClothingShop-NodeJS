@@ -83,4 +83,42 @@ router.post('/create', async (req, res) => {
     }
 });
 
+// Clothes updating form rendering
+router.get('/update/:id', async (req, res) => {
+    try {
+        const clothes = await Clothes.findById(req.params.id);
+        const colors = await Color.find();
+        const categories = await Category.find();
+
+        res.render('create_clothes.html', {
+            title: 'Изменение информации об одежде',
+            clothes: clothes,
+            colors: colors,
+            categories: categories,
+        });
+    } catch (err) {
+        res.json({message: err});
+    }
+});
+
+// Update clothes
+router.post('/update/:id', async (req, res) => {
+    try {
+        let clothes = await Clothes.findById(req.params.id);
+
+        clothes.name = req.body.name;
+        clothes.category_id = req.body.category_id;
+        clothes.color_id = req.body.color_id;
+        clothes.price = req.body.price;
+        clothes.sizes = req.body.sizes;
+        clothes.description = req.body.description;
+        clothes.imagePath = req.body.imagePath;
+
+        await clothes.save();
+        res.redirect('/admin');
+    } catch (err) {
+        res.json({message: err});
+    }
+});
+
 module.exports = router;

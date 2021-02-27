@@ -8,15 +8,21 @@
 
 <main>
     <div class="container py-4">
-        <form action="/create/" method="POST">
+        <form method="POST">
             <div class="mb-3">
                 <label for="name" class="form-label">Название</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Футболка Itachi" required>
+                <input type="text" 
+                        class="form-control" 
+                        name="name" 
+                        id="name"
+                        placeholder="Футболка Itachi" 
+                        value="{{ clothes.name }}" 
+                        required>
             </div>
 
             <div class="mb-3">
                 <label for="categorySelect" class= "form-label">Категория</label>
-                <select class="form-select" name="category_id">
+                <select class="form-select" name="category_id" value="{{ clothes.category_id }}">
                     {% for category in categories %}
                     <option value="{{ category.id }}">{{ category.name }}</option>
                     {% endfor %}
@@ -25,7 +31,7 @@
 
             <div class="mb-3">
                 <label for="colorSelect" class= "form-label">Цвет</label>
-                <select class="form-select" name="color_id" id="colorSelect">
+                <select class="form-select" name="color_id" id="colorSelect" value="{{ clothes.color_id }}">
                     {% for color in colors %}
                     <option value="{{ color.id }}">{{ color.name }}</option>
                     {% endfor %}
@@ -34,22 +40,40 @@
 
             <div class="mb-3">
                 <label for="costInput" class="form-label">Цена</label>
-                <input type="number" class="form-control" name="price" id="costInput" placeholder="1000 р." required step="any">
+                <input type="number" 
+                        class="form-control" 
+                        name="price" 
+                        id="costInput"
+                        placeholder="1000 р." 
+                        value="{{ clothes.price }}" 
+                        required 
+                        step="any">
             </div>
 
             <div class="mb-3">
                 <label for="sizeInput" class="form-label">Размеры</label>
-                <input type="text" class="form-control" name="sizes"  id="sizeInput" placeholder="M, L" required>
+                <input type="text" 
+                        class="form-control" 
+                        name="sizes"  
+                        id="sizeInput"
+                        placeholder="M, L" 
+                        value="{{ clothes.sizes }}" 
+                        required>
             </div>
 
             <div class="mb-3">
                 <label for="controlDescriptionTextArea">Описание</label>
-                <textarea class="form-control" name="description" id="controlDescriptionTextArea" rows="5" placeholder="Футболка прямого кроя, выполненная из синтетической ткани, приятной на ощупь."></textarea>
+                <textarea class="form-control" 
+                            name="description"
+                            id="controlDescriptionTextArea" rows="5" 
+                            placeholder="Футболка прямого кроя, выполненная из синтетической ткани, приятной на ощупь.">
+                    {{ clothes.description }}
+                </textarea>
             </div>
 
             <div class="mb-3">
                 <label for="imageFile" class="form-label">Фото</label>
-                <input class="form-control" type="file" name="imagePath" id="imageFile">
+                <input class="form-control" type="file" name="imagePath" value="{{ clothes.imagePath }}" id="imageFile">
             </div>
 
             <div class="pt-3">
