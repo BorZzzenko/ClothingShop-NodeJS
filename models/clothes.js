@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const clothesSchema = mongoose.Schema({
-    id: Number,
     name: {
         type: String,
         required: true

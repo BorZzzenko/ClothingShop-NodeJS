@@ -121,4 +121,14 @@ router.post('/update/:id', async (req, res) => {
     }
 });
 
+// Delete clothes
+router.post('/delete/:id', async (req, res) => {
+    try {
+        await Clothes.deleteOne({_id: req.params.id});
+        res.redirect('/admin');
+    } catch {
+        res.json({message: err});
+    }
+});
+
 module.exports = router;
