@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Dir with img, css files
-app.use(express.static(path.join(__dirname, "static")));
+app.use('/static', express.static(path.join(__dirname, "static")));
 
 // Register twig
 app.engine('html', twig.renderFile);
