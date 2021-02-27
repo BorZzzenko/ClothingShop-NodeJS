@@ -17,6 +17,19 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Clothes catalog admin
+router.get('/admin', async (req, res) => {
+    try {
+        const allClothes = await Clothes.find();
+
+        res.render('admin.html', {
+            clothes: allClothes
+        });
+    } catch (err) {
+        res.json({message: err});
+    }
+});
+
 // Clothes info
 router.get('/product/:id', async (req, res) => {
     try {
@@ -64,7 +77,7 @@ router.post('/create', async (req, res) => {
 
     try {
         await clothes.save();
-        res.redirect('/');
+        res.redirect('/admin');
     } catch (err) {
         res.json({message: err});
     }
