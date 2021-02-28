@@ -1,8 +1,24 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require("path");
+const { v4: uuidv4 } = require('uuid');
 const Clothes = require('../models/clothes');
 const Color = require('../models/color');
 const Category = require('../models/category');
+
+// Dir to save images from user
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, __dirname.replace("routes", "") + '/static/img')
+    },
+    filename: function (req, file, cb) {
+        cb(null, uuidv4() + '_' + file.originalname)
+    }
+});
+
+// Images uploader
+const uploader = multer({ storage: storage });
 
 // Clothes catalog
 router.get('/', async (req, res) => {
@@ -64,7 +80,12 @@ router.get('/create', async (req, res) => {
 });
 
 // Create clothes
-router.post('/create', async (req, res) => {
+router.post('/create', uploader.single('imagePath'), async (req, res) => {
+    let imagePath = "";
+
+    if (req.file)
+        imagePath =  path.basename(req.file.path);
+    
     const clothes = new Clothes({
         name: req.body.name,
         category_id: req.body.category_id,
@@ -72,7 +93,7 @@ router.post('/create', async (req, res) => {
         price: req.body.price,
         sizes: req.body.sizes,
         description: req.body.description,
-        imagePath: req.body.imagePath
+        imagePath: imagePath
     });
 
     try {
@@ -102,7 +123,12 @@ router.get('/update/:id', async (req, res) => {
 });
 
 // Update clothes
-router.post('/update/:id', async (req, res) => {
+router.post('/update/:id', uploader.single('imagePath'), async (req, res) => {
+    let imagePath = "";
+
+    if (req.file)
+        imagePath =  path.basename(req.file.path);
+
     try {
         let clothes = await Clothes.findById(req.params.id);
 
@@ -112,7 +138,7 @@ router.post('/update/:id', async (req, res) => {
         clothes.price = req.body.price;
         clothes.sizes = req.body.sizes;
         clothes.description = req.body.description;
-        clothes.imagePath = req.body.imagePath;
+        clothes.imagePath = imagePath;
 
         await clothes.save();
         res.redirect('/admin');

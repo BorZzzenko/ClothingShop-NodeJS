@@ -8,7 +8,7 @@
 
 <main>
     <div class="container py-4">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">Название</label>
                 <input type="text" 
@@ -65,9 +65,8 @@
                 <label for="controlDescriptionTextArea">Описание</label>
                 <textarea class="form-control" 
                             name="description"
-                            id="controlDescriptionTextArea" rows="5" 
-                            placeholder="Футболка прямого кроя, выполненная из синтетической ткани, приятной на ощупь.">{{ clothes.description }}
-                </textarea>
+                            placeholder="Футболка прямого кроя, выполненная из синтетической ткани, приятной на ощупь."
+                            id="controlDescriptionTextArea" rows="5">{{ clothes.description }}</textarea>
             </div>
 
             <div class="mb-3">
