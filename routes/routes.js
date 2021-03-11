@@ -163,4 +163,28 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
+// Clothes info
+router.get('/info/:id', async (req, res) => {
+    try {
+        const clothes = await Clothes.findById(req.params.id);
+        const color = await Color.findOne({id: clothes.color_id});
+        const category = await Category.findOne({id: clothes.category_id});
+        
+        if (clothes == null) {
+            res.status(404).json({message: "Clothes with id=" + req.params.id + " not founded"});
+        }
+
+        res.status(200).json({
+            name: clothes.name,
+            category: category.name,
+            color: color.name,
+            price: clothes.price,
+            sizes: clothes.sizes,
+            description: clothes.description,
+        });
+    } catch (err) {
+        res.json({message: err});
+    }
+});
+
 module.exports = router;

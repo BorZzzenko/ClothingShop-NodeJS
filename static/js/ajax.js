@@ -19,4 +19,27 @@ $(document).ready(function() {
 		});
 	});
 
+	// clothes info preview
+	$('.preview').click(function(event) {
+        event.preventDefault();
+        
+		let id = $(this).data("id");
+
+		$.ajax({
+			type: "GET",
+			url: "/info/" + id,
+			success: function (res) {
+				$("#name").text(res.name);
+				$("#color").text(res.color);
+				$("#category").text(res.category);
+				$("#price").text(res.price);
+				$("#sizes").text(res.sizes);
+				$("#description").text(res.description);
+			},
+			error: function (msg) {
+				alert('Ошибка: ' + msg.responseJSON.message);
+			}
+		});
+	});
+
 });

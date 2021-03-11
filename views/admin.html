@@ -30,8 +30,13 @@
                             <p class="card-text">{{ item.description }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-inline-flex">
+                                        <button class="btn btn-sm btn-outline-dark preview"
+                                                data-id="{{ item._id }}"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#Modal">Подробнее</button>
+                                        
                                         <form action="/update/{{ item._id }}" method="get">
-                                            <button type="submit" class="btn btn-sm btn-outline-dark">Изменить</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-dark ms-1">Изменить</button>
                                         </form>
                                         
                                         <form class="delete-form" data-id="{{ item._id }}">
@@ -47,6 +52,40 @@
 
                 {% endfor %}
 
+            </div>
+        </div>
+    </div>
+
+     <!-- clothes info modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Информация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="name"><strong>Название:</strong></label>
+                    <p id="name" class="py-1"></p>
+
+                    <label for="category"><strong>Категория:</strong></label>
+                    <p id="category" class="py-1"></p>
+
+                    <label for="color"><strong>Цвет:</strong></label>
+                    <p id="color" class="py-1"></p>
+
+                    <label for="sizes"><strong>Размеры:</strong></label>
+                    <p id="sizes" class="py-1"></p>
+
+                    <label for="price"><strong>Цена:</strong></label>
+                    <p id="price" class="py-1"></p>
+
+                    <label for="description"><strong>Описание:</strong></label>
+                    <p id="description" class="py-1"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-sm btn-dark" data-bs-dismiss="modal">Закрыть</button>
+                </div>
             </div>
         </div>
     </div>
