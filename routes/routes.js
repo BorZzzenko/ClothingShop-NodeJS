@@ -148,11 +148,17 @@ router.post('/update/:id', uploader.single('imagePath'), async (req, res) => {
 });
 
 // Delete clothes
-router.post('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
+    let clothes = await Clothes.findById(req.params.id);
+
+    if (clothes == null) {
+        res.status(404).json({message: "Clothes with id=" + req.params.id + " not founded"});
+    }
+
     try {
         await Clothes.deleteOne({_id: req.params.id});
-        res.redirect('/admin');
-    } catch {
+        res.status(200).json({message: "deleted"});
+    } catch (err) {
         res.json({message: err});
     }
 });
