@@ -42,4 +42,23 @@ $(document).ready(function() {
 		});
 	});
 
+	// clothes creation
+	$('.create-form').submit(function(event) {
+		event.preventDefault();
+		
+		$.ajax({
+			type: "POST",
+			url: "/create",
+			data: new FormData(this),
+			contentType: false,
+			processData: false,
+			success: function () {
+				alert('Одежда успешно добавлена в каталог!');
+			},
+			error: function (msg) {
+				alert('Ошибка во время добавления: ' + msg.responseJSON.message);
+			}
+		});
+	})
+
 });

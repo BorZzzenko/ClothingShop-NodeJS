@@ -98,9 +98,9 @@ router.post('/create', uploader.single('imagePath'), async (req, res) => {
 
     try {
         await clothes.save();
-        res.redirect('/admin');
+        res.status(200).json({message: "Clothes created"});
     } catch (err) {
-        res.json({message: err});
+        res.status(500).json({message: err});
     }
 });
 

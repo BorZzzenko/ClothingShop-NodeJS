@@ -8,7 +8,11 @@
 
 <main>
     <div class="container py-4">
-        <form method="POST" enctype="multipart/form-data">
+        {% if clothes %}
+        <form method="POST" class="update-form" enctype="multipart/form-data">
+        {% else %}
+        <form method="POST" class="create-form" enctype="multipart/form-data">
+        {% endif %}
             <div class="mb-3">
                 <label for="name" class="form-label">Название</label>
                 <input type="text" 
@@ -22,7 +26,7 @@
 
             <div class="mb-3">
                 <label for="categorySelect" class= "form-label">Категория</label>
-                <select class="form-select" name="category_id" value="{{ clothes.category_id }}">
+                <select class="form-select" id="categorySelect" name="category_id" value="{{ clothes.category_id }}">
                     {% for category in categories %}
                     <option value="{{ category.id }}">{{ category.name }}</option>
                     {% endfor %}
@@ -76,6 +80,7 @@
 
             <div class="pt-3">
                 <button type="submit" class="btn btn-dark">Ok</button>
+                <a href="/admin" class="btn btn-outline-dark ms-1">Назад</a>
             </div>
 
         </form>
